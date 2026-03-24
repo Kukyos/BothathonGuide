@@ -480,7 +480,7 @@ export default function App() {
                      <h1 id="phase-4">Phase 4: The Hackathon</h1>
                      <p>You've completed the workshop! You now have the skills to build a functioning, intelligent chatbot with memory and custom personas. It's time to build your hackathon project.</p>
                   </div>
-                  <IdeaGenerator apiKey={typeof process !== 'undefined' ? (process.env as any).GROQ_API_KEY : undefined} />
+                  <IdeaGenerator />
                 </motion.section>
               )}
             </AnimatePresence>
