@@ -2,8 +2,17 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dice5, Loader2, Sparkles, Copy, Check } from 'lucide-react';
 
-interface IdeaGeneratorProps {
-  apiKey?: string;
+interface GroqChatMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+}
+
+interface GroqChatResponse {
+  choices?: Array<{
+    message?: {
+      content?: string;
+    };
+  }>;
 }
 
 const IDEA_CATEGORIES = [
@@ -30,68 +39,104 @@ const FALLBACK_IDEAS = [
   "🌍 A hyper-local travel guide bot — tell it your zip code and interests, and it chats with you to plan a staycation itinerary",
 ];
 
-export default function IdeaGenerator({ apiKey }: IdeaGeneratorProps) {
+export default function IdeaGenerator() {
   const [idea, setIdea] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [theme, setTheme] = useState('');
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
 
+  const buildMessages = (themeContext: string): GroqChatMessage[] => [
+    {
+      role: 'system',
+      content: `You are a creative hackathon idea generator for a chatbot hackathon. Generate ONE unique, creative, and feasible AI-powered chatbot project idea for a hackathon. 
+      
+The idea MUST:
+- Be a text-based chatbot or conversational agent ONLY (no image generation, no voice generation, no image analysis, no vision)
+- Be buildable in 1-2 hours using Groq or Gemini text APIs
+- Be practical and impressive
+- Include a catchy name
+
+Format: Start with an emoji and the project name in bold, then a 2-3 sentence description of what the chatbot does and why it's cool. Keep it under 80 words total.`,
+    },
+    {
+      role: 'user',
+      content: `${themeContext} Give me a fresh, creative hackathon project idea.`,
+    },
+  ];
+
+  const generateViaVercelApi = async (messages: GroqChatMessage[]) => {
+    const response = await fetch('/api/groq', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages,
+        temperature: 1.3,
+        max_tokens: 200,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Vercel API error: ${response.status}`);
+    }
+
+    const data = (await response.json()) as GroqChatResponse;
+    return data.choices?.[0]?.message?.content?.trim();
+  };
+
+  const generateDirectFromBrowser = async (messages: GroqChatMessage[]) => {
+    const publicApiKey = import.meta.env.VITE_GROQ_API_KEY as string | undefined;
+    if (!publicApiKey) {
+      throw new Error('No VITE_GROQ_API_KEY configured for direct browser fallback.');
+    }
+
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${publicApiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages,
+        temperature: 1.3,
+        max_tokens: 200,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Direct Groq API error: ${response.status}`);
+    }
+
+    const data = (await response.json()) as GroqChatResponse;
+    return data.choices?.[0]?.message?.content?.trim();
+  };
+
   const generateIdea = async () => {
     setIsLoading(true);
     setError('');
-
-    // If no API key, use fallback ideas
-    if (!apiKey) {
-      await new Promise(r => setTimeout(r, 800)); // fake delay
-      const randomIdea = FALLBACK_IDEAS[Math.floor(Math.random() * FALLBACK_IDEAS.length)];
-      setIdea(randomIdea);
-      setIsLoading(false);
-      return;
-    }
 
     try {
       const themeContext = theme.trim()
         ? `The user is interested in: "${theme}". Generate an idea related to this theme.`
         : `Pick a random category from: ${IDEA_CATEGORIES.join(', ')}.`;
+      const messages = buildMessages(themeContext);
 
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages: [
-            {
-              role: 'system',
-              content: `You are a creative hackathon idea generator. Generate ONE unique, creative, and feasible AI-powered chatbot project idea for a hackathon. 
-              
-The idea MUST:
-- Be a text-based chatbot or conversational agent ONLY (no image generation, no voice generation, no image analysis, no vision)
-- Be buildable in 24-48 hours using Groq or Gemini text APIs
-- Be practical and impressive
-- Include a catchy name and emoji
+      let nextIdea = '';
 
-Format: Start with an emoji and the project name in bold, then a 2-3 sentence description of what the chatbot does and why it's cool. Keep it under 80 words total.`
-            },
-            {
-              role: 'user',
-              content: themeContext + " Give me a fresh, creative hackathon project idea."
-            }
-          ],
-          temperature: 1.3,
-          max_tokens: 200,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
+      try {
+        nextIdea = (await generateViaVercelApi(messages)) ?? '';
+      } catch {
+        // Fallback keeps local dev usable if /api isn't running.
+        nextIdea = (await generateDirectFromBrowser(messages)) ?? '';
       }
 
-      const data = await response.json();
-      setIdea(data.choices[0].message.content);
+      if (!nextIdea) {
+        throw new Error('No idea returned from model response.');
+      }
+
+      setIdea(nextIdea);
     } catch (err) {
       setError('Failed to generate. Using offline ideas!');
       const randomIdea = FALLBACK_IDEAS[Math.floor(Math.random() * FALLBACK_IDEAS.length)];

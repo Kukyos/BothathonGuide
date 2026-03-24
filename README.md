@@ -15,6 +15,19 @@ View your app in AI Studio: https://ai.studio/apps/ef69bc7e-3132-4766-b55f-d8036
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+2. Create `.env` with:
+   - `GROQ_API_KEY=your_key_here` (recommended)
+   - `VITE_GROQ_API_KEY=your_key_here` (optional local fallback only)
 3. Run the app:
    `npm run dev`
+
+## Deploy To Vercel
+
+1. Import the repo into Vercel.
+2. In Project Settings -> Environment Variables, add:
+   - `GROQ_API_KEY` = your Groq API key
+3. Deploy.
+
+Notes:
+- The app calls `/api/groq` on Vercel, and that serverless function reads `GROQ_API_KEY` securely.
+- `VITE_GROQ_API_KEY` is only for local fallback and is exposed to the browser bundle.
