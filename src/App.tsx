@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { 
-  Terminal, 
-  ChevronDown,
-  Menu, 
+  TerminalWindow, 
+  CaretDown,
+  List, 
   X,
-  Sparkles,
+  Sparkle,
   ArrowRight,
   Copy,
-  Check
-} from 'lucide-react';
+  Check,
+  Lightning,
+  Brain,
+  DiceThree,
+  CodeBlock as CodeBlockIcon,
+  Robot,
+  RocketLaunch
+} from '@phosphor-icons/react';
 import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
@@ -20,15 +26,15 @@ import { PHASE_1_CONTENT } from './content/phase1';
 import { PHASE_2_CONTENT } from './content/phase2';
 import { PHASE_3_CONTENT } from './content/phase3';
 import IdeaGenerator from './components/IdeaGenerator';
-import Antigravity from './Antigravity';
 import GradualBlur from './GradualBlur';
 import { DownloadProjectButton, DownloadFileButton } from './components/DownloadButton';
+import TextType from './TextType';
 
-const PHASE_LABELS: Record<number, { title: string; icon: string }> = {
-  1: { title: 'Phase 1: Terminal Bot', icon: '🖥️' },
-  2: { title: 'Phase 2: Modifiers', icon: '⚡' },
-  3: { title: 'Phase 3: Memory', icon: '🧠' },
-  4: { title: 'Phase 4: Idea Generator', icon: '🎲' },
+const PHASE_LABELS: Record<number, { title: string; icon: React.ReactNode }> = {
+  1: { title: 'Phase 1: Terminal Bot', icon: <TerminalWindow weight="bold" /> },
+  2: { title: 'Phase 2: Modifiers', icon: <Lightning weight="bold" /> },
+  3: { title: 'Phase 3: Memory', icon: <Brain weight="bold" /> },
+  4: { title: 'Phase 4: Idea Generator', icon: <DiceThree weight="bold" /> },
 };
 
 // Custom Code Block with Copy Button
@@ -280,7 +286,7 @@ export default function App() {
         <div className="max-w-[1600px] mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3 group cursor-pointer" onClick={() => navigateToView('intro')}>
             <div className="w-9 h-9 rounded-lg bg-white flex items-center justify-center transition-transform group-hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-              <Terminal className="w-5 h-5 text-black" />
+              <TerminalWindow className="w-5 h-5 text-black" weight="bold" />
             </div>
             <div className="flex flex-col">
               <span className="font-black tracking-tighter text-lg font-display leading-none">BOT-A-THON</span>
@@ -292,7 +298,7 @@ export default function App() {
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className="lg:hidden p-2 text-white/70 hover:text-white transition-colors"
           >
-            {isSidebarOpen ? <X /> : <Menu />}
+            {isSidebarOpen ? <X weight="bold" /> : <List weight="bold" />}
           </button>
         </div>
       </header>
@@ -345,7 +351,7 @@ export default function App() {
                         <span>{PHASE_LABELS[phase]?.title}</span>
                       </span>
                       {subItems.length > 0 && (
-                        <ChevronDown 
+                        <CaretDown weight="bold"
                           className={cn(
                             "w-3.5 h-3.5 text-white/30 transition-transform",
                             !isExpanded && "-rotate-90"
@@ -419,53 +425,57 @@ export default function App() {
                   transition={{ duration: 0.3 }}
                   id="intro" 
                   data-nav-id="intro" 
-                  className="hero-section"
+                  className="hero-section pb-48"
                 >
-                  <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', overflow: 'hidden', zIndex: -1 }}>
-                    <Antigravity
-                        count={300}
-                        magnetRadius={6}
-                        ringRadius={7}
-                        waveSpeed={0.4}
-                        waveAmplitude={1}
-                        particleSize={1.5}
-                        lerpSpeed={0.05}
-                        color="#5227FF"
-                        autoAnimate
-                        particleVariance={1}
-                        rotationSpeed={0}
-                        depthFactor={1}
-                        pulseSpeed={3}
-                        particleShape="capsule"
-                        fieldStrength={10}
-                    />
-                  </div>
                   <div className="hero-badge">
-                    <Sparkles className="w-3 h-3 text-white" />
+                    <Sparkle className="w-3 h-3 text-white" weight="fill" />
                     Official Resource Hub
                   </div>
                   <h1 className="hero-title">
-                    CODE THE <br />
-                    <span className="hero-title-accent text-gradient">FUTURE.</span>
+                    <TextType 
+                      texts={[
+                        "CONVERSATIONS ENGINEERED.",
+                        "BUILD THE FUTURE.",
+                        "CODE INTELLIGENCE."
+                      ]}
+                      typingSpeed={75}
+                      pauseDuration={2000}
+                      deletingSpeed={30}
+                      showCursor={true}
+                      cursorCharacter="|"
+                      cursorBlinkDuration={0.6}
+                    />
                   </h1>
-                  <p className="hero-description">
+                  <p className="hero-description text-lg max-w-2xl mt-6">
                     Welcome to the <span className="text-white font-medium">Bot-A-Thon</span>. 
-                    Master AI APIs and build intelligent chatbots — from your first terminal script to a full-featured project.
+                    Master AI APIs, memory persistence, and custom personas in under an hour to build award-winning intelligent chatbots.
                   </p>
                   <div className="flex flex-wrap gap-4 mt-8">
                     <button 
                       onClick={() => { navigateToView(1); handleConfetti(); }}
-                      className="hero-button-primary"
+                      className="hero-button-primary hover:scale-105 transition-transform"
                     >
                       Start Workshop
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-4 h-4" weight="bold" />
                     </button>
-                    <button 
-                      onClick={() => navigateToView(4)}
-                      className="hero-button-secondary"
-                    >
-                      🎲 Idea Generator
-                    </button>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-3 gap-6 mt-20 relative z-10 w-full max-w-4xl opacity-80 hover:opacity-100 transition-opacity">
+                    <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-md">
+                      <Robot className="w-8 h-8 text-emerald-400 mb-4" weight="duotone" />
+                      <h3 className="text-white font-medium text-lg mb-2">Build Personas</h3>
+                      <p className="text-white/60 text-sm">Create unique AI personalities using system prompts and temperature tuning.</p>
+                    </div>
+                    <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-md">
+                      <Brain className="w-8 h-8 text-blue-400 mb-4" weight="duotone" />
+                      <h3 className="text-white font-medium text-lg mb-2">Add Memory</h3>
+                      <p className="text-white/60 text-sm">Persist conversations to disk so your bots remember users between sessions.</p>
+                    </div>
+                    <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-md">
+                      <RocketLaunch className="w-8 h-8 text-purple-400 mb-4" weight="duotone" />
+                      <h3 className="text-white font-medium text-lg mb-2">Deploy Fast</h3>
+                      <p className="text-white/60 text-sm">Turn your terminal scripts into stunning web apps in minutes with Streamlit.</p>
+                    </div>
                   </div>
                 </motion.section>
               )}
@@ -484,18 +494,19 @@ export default function App() {
                   data-nav-id="phase-4" 
                   className="pt-16 pb-32"
                 >
-                  <div className="markdown-body mb-12">
+                  <div className="markdown-body mb-8">
                      <h1 id="phase-4">Phase 4: The Hackathon</h1>
                      <p>You've completed the workshop! You now have the skills to build a functioning, intelligent chatbot with memory and custom personas. It's time to build your hackathon project.</p>
-                     
-                     <div className="mt-8 mb-12 bg-white/[0.02] border border-white/10 rounded-xl p-8 text-center max-w-2xl">
-                       <h3 className="text-xl font-display font-medium text-white mb-3">Download Your Complete Setup</h3>
-                       <p className="text-white/60 text-sm mb-6">
-                         Get the entire project ready to go! Includes 1-click installer and runners so you can focus on modifying the bots for your hackathon idea.
-                       </p>
-                       <DownloadProjectButton />
-                     </div>
                   </div>
+                     
+                  <div className="mb-12 bg-white/[0.02] border border-white/10 rounded-xl p-8 text-center">
+                    <h3 className="text-xl font-display font-medium text-white mb-3">Download Your Complete Setup</h3>
+                    <p className="text-white/60 text-sm mb-6 max-w-2xl mx-auto">
+                      Get the entire project ready to go! Includes 1-click installer and runners so you can focus on modifying the bots for your hackathon idea.
+                    </p>
+                    <DownloadProjectButton />
+                  </div>
+                  
                   <IdeaGenerator />
                 </motion.section>
               )}
@@ -503,9 +514,9 @@ export default function App() {
           </div>
 
           {/* Footer */}
-          <footer className="docs-footer mt-auto">
+          <footer className="docs-footer mt-auto relative z-[60]">
             <div className="flex items-center gap-3">
-              <Terminal className="w-4 h-4 text-white/40" />
+              <TerminalWindow className="w-4 h-4 text-white/40" weight="bold" />
               <span className="font-black tracking-tighter text-sm font-display text-white/40">BOT-A-THON</span>
             </div>
             <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.2em]">© 2026 Official Hackathon Hub</p>
@@ -515,9 +526,9 @@ export default function App() {
             <GradualBlur
               target="parent"
               position="bottom"
-              height="7rem"
+              height="4rem"
               strength={2}
-              divCount={5}
+              divCount={15}
               curve="bezier"
               exponential
               opacity={1}

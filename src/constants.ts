@@ -18,11 +18,13 @@ export const NAV_ITEMS: NavItem[] = [
   { title: "Install VS Code", id: "step-3-install-vs-code", level: 1, phase: 1 },
   { title: "Create Project Folder", id: "step-4-create-your-project-folder", level: 1, phase: 1 },
   { title: "Create Your File", id: "step-5-create-your-first-file", level: 1, phase: 1 },
-  { title: "Install Gemini SDK", id: "step-7-install-the-gemini-sdk", level: 1, phase: 1 },
-  { title: "Get API Key", id: "step-8-get-your-gemini-api-key", level: 1, phase: 1 },
-  { title: "Write the Chatbot", id: "step-9-write-your-chatbot", level: 1, phase: 1 },
-  { title: "Run It", id: "step-10-run-your-chatbot", level: 1, phase: 1 },
-  { title: "Make It Interactive", id: "step-11-make-it-interactive", level: 1, phase: 1 },
+  { title: "Open VS Code Terminal", id: "step-6-open-the-vs-code-terminal", level: 1, phase: 1 },
+  { title: "Virtual Environment", id: "step-7-create-a-virtual-environment", level: 1, phase: 1 },
+  { title: "Install Gemini SDK", id: "step-8-install-the-gemini-sdk", level: 1, phase: 1 },
+  { title: "Get API Key", id: "step-9-get-your-gemini-api-key", level: 1, phase: 1 },
+  { title: "Write the Chatbot", id: "step-10-write-your-chatbot", level: 1, phase: 1 },
+  { title: "Run It", id: "step-11-run-your-chatbot", level: 1, phase: 1 },
+  { title: "Make It Interactive", id: "step-12-make-it-interactive", level: 1, phase: 1 },
   { title: "Rate Limits", id: "the-rate-limit-problem-", level: 1, phase: 1 },
   { title: "Groq Alternative", id: "enter-groq--the-fast-alternative", level: 1, phase: 1 },
 
@@ -36,6 +38,7 @@ export const NAV_ITEMS: NavItem[] = [
   // Phase 3
   { title: "Phase 3: Memory", id: "phase-3", level: 0, phase: 3 },
   { title: "The Problem", id: "the-problem", level: 1, phase: 3 },
+  { title: "Conversation History", id: "step-1-conversation-history-in-session", level: 1, phase: 3 },
   { title: "Save to File", id: "step-2-saving-memory-to-a-file", level: 1, phase: 3 },
   { title: "Smart Memory", id: "step-3-smart-memory--summarizing-old-conversations", level: 1, phase: 3 },
 

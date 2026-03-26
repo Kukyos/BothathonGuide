@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import JSZip from 'jszip';
-import { Download, Check, FileDown, Loader2 } from 'lucide-react';
+import { DownloadSimple, Check, FileArrowDown, Spinner } from '@phosphor-icons/react';
 import { TUTORIAL_FILES, getProjectFiles } from '../projectFiles';
 
 // Component for downloading a single file (inserted into code blocks)
@@ -41,9 +41,9 @@ export const DownloadFileButton = ({ filename }: { filename: string }) => {
       title={`Download ${fileData.label}`}
     >
       {downloaded ? (
-        <Check className="w-4 h-4 text-emerald-400" />
+        <Check className="w-4 h-4 text-emerald-400" weight="bold" />
       ) : (
-        <FileDown className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+        <FileArrowDown className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" weight="bold" />
       )}
       {downloaded ? 'Downloaded!' : `Download ${fileData.label}`}
     </button>
@@ -103,21 +103,21 @@ export const DownloadProjectButton = () => {
       
       {status === 'idle' && (
         <>
-          <Download className="w-4 h-4 text-emerald-400" />
+          <DownloadSimple className="w-4 h-4 text-emerald-400" weight="bold" />
           <span className="text-white">Download Complete Project (ZIP)</span>
         </>
       )}
       
       {status === 'zipping' && (
         <>
-          <Loader2 className="w-4 h-4 text-emerald-400 animate-spin" />
+          <Spinner className="w-4 h-4 text-emerald-400 animate-spin" weight="bold" />
           <span className="text-white">Preparing ZIP...</span>
         </>
       )}
       
       {status === 'success' && (
         <>
-          <Check className="w-4 h-4 text-emerald-400" />
+          <Check className="w-4 h-4 text-emerald-400" weight="bold" />
           <span className="text-emerald-400">Downloaded Successfully!</span>
         </>
       )}

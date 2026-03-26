@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Dice5, Loader2, Sparkles, Copy, Check } from 'lucide-react';
+import { DiceThree, Spinner, Sparkle, Copy, Check } from '@phosphor-icons/react';
 
 interface GroqChatMessage {
   role: 'system' | 'user' | 'assistant';
@@ -27,16 +27,16 @@ const IDEA_CATEGORIES = [
 ];
 
 const FALLBACK_IDEAS = [
-  "🎓 An AI study buddy chatbot that quizzes you on history facts and explains topics in the style of famous historical figures",
-  "📝 An AI meeting prep bot that interviews you about an upcoming meeting and generates an agenda and talking points",
-  "🗣️ A language exchange chatbot that role-plays real-world scenarios (ordering food, job interviews) in your target language",
-  "💰 A personal finance text companion that asks daily questions about your spending and gives gentle text-based budgeting advice",
-  "🎮 An AI game master chatbot for text-based RPG adventures that adapts the story branching based on your text choices",
-  "🧘 A mindfulness text-coach that checks in via chat and suggests personalized breathing or journaling exercises",
-  "💼 A mock-interview chatbot that acts as a hiring manager, asks industry-specific questions, and critiques your answers",
-  "🍳 A recipe-brainstorming chatbot that asks what ingredients you have and guides you through cooking via step-by-step chat messages",
-  "🤝 A conflict-resolution chatbot that helps you draft difficult text messages or emails to friends or coworkers",
-  "🌍 A hyper-local travel guide bot — tell it your zip code and interests, and it chats with you to plan a staycation itinerary",
+  "An AI study buddy chatbot that quizzes you on history facts and explains topics in the style of famous historical figures",
+  "An AI meeting prep bot that interviews you about an upcoming meeting and generates an agenda and talking points",
+  "A language exchange chatbot that role-plays real-world scenarios (ordering food, job interviews) in your target language",
+  "A personal finance text companion that asks daily questions about your spending and gives gentle text-based budgeting advice",
+  "An AI game master chatbot for text-based RPG adventures that adapts the story branching based on your text choices",
+  "A mindfulness text-coach that checks in via chat and suggests personalized breathing or journaling exercises",
+  "A mock-interview chatbot that acts as a hiring manager, asks industry-specific questions, and critiques your answers",
+  "A recipe-brainstorming chatbot that asks what ingredients you have and guides you through cooking via step-by-step chat messages",
+  "A conflict-resolution chatbot that helps you draft difficult text messages or emails to friends or coworkers",
+  "A hyper-local travel guide bot — tell it your zip code and interests, and it chats with you to plan a staycation itinerary",
 ];
 
 export default function IdeaGenerator() {
@@ -155,8 +155,8 @@ Format: Start with an emoji and the project name in bold, then a 2-3 sentence de
   return (
     <div className="idea-generator">
       <div className="idea-generator-header">
-        <div className="idea-generator-icon">
-          <Sparkles className="w-8 h-8 text-black" />
+        <div className="idea-generator-icon bg-white text-black p-2 rounded-lg flex items-center justify-center">
+          <Sparkle className="w-8 h-8" weight="fill" />
         </div>
         <div>
           <h2 className="idea-generator-title">Hackathon Idea Generator</h2>
@@ -182,9 +182,9 @@ Format: Start with an emoji and the project name in bold, then a 2-3 sentence de
           title="Generate idea"
         >
           {isLoading ? (
-            <Loader2 className="w-6 h-6 animate-spin" />
+            <Spinner className="w-6 h-6 animate-spin" weight="bold" />
           ) : (
-            <Dice5 className="w-6 h-6" />
+            <DiceThree className="w-6 h-6" weight="fill" />
           )}
         </button>
       </div>
@@ -222,9 +222,9 @@ Format: Start with an emoji and the project name in bold, then a 2-3 sentence de
       </AnimatePresence>
 
       {!idea && !isLoading && (
-        <div className="idea-empty-state">
-          <Dice5 className="w-10 h-10 text-white/10" />
-          <p>Click the dice to generate your first idea!</p>
+        <div className="idea-empty-state text-center flex flex-col items-center mt-12 mb-8">
+          <DiceThree className="w-10 h-10 text-white/20 mb-4" weight="duotone" />
+          <p className="text-white/40">Click the dice to generate your first idea!</p>
         </div>
       )}
     </div>
