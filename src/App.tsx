@@ -22,6 +22,7 @@ import { PHASE_3_CONTENT } from './content/phase3';
 import IdeaGenerator from './components/IdeaGenerator';
 import Antigravity from './Antigravity';
 import GradualBlur from './GradualBlur';
+import { DownloadProjectButton, DownloadFileButton } from './components/DownloadButton';
 
 const PHASE_LABELS: Record<number, { title: string; icon: string }> = {
   1: { title: 'Phase 1: Terminal Bot', icon: '🖥️' },
@@ -160,10 +161,17 @@ export default function App() {
     },
     p: ({ children }: any) => {
       const hasBlockElement = React.Children.toArray(children).some(
-        (child: any) => child?.type === 'video' || child?.type === 'img' || child?.type === 'div'
+        (child: any) => child?.type === 'video' || child?.type === 'img' || child?.type === 'div' || child?.type === DownloadFileButton
       );
       if (hasBlockElement) return <div className="my-8">{children}</div>;
       return <p>{children}</p>;
+    },
+    a: ({ href, children, ...props }: any) => {
+      if (href?.startsWith('download:')) {
+        const filename = href.replace('download:', '');
+        return <DownloadFileButton filename={filename} />;
+      }
+      return <a href={href} target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-4 decoration-emerald-500/30 hover:decoration-emerald-400 transition-colors inline-flex items-center gap-1" {...props}>{children}</a>;
     },
     pre: ({ children }: any) => {
       const codeElement = React.Children.toArray(children)[0] as any;
@@ -479,6 +487,14 @@ export default function App() {
                   <div className="markdown-body mb-12">
                      <h1 id="phase-4">Phase 4: The Hackathon</h1>
                      <p>You've completed the workshop! You now have the skills to build a functioning, intelligent chatbot with memory and custom personas. It's time to build your hackathon project.</p>
+                     
+                     <div className="mt-8 mb-12 bg-white/[0.02] border border-white/10 rounded-xl p-8 text-center max-w-2xl">
+                       <h3 className="text-xl font-display font-medium text-white mb-3">Download Your Complete Setup</h3>
+                       <p className="text-white/60 text-sm mb-6">
+                         Get the entire project ready to go! Includes 1-click installer and runners so you can focus on modifying the bots for your hackathon idea.
+                       </p>
+                       <DownloadProjectButton />
+                     </div>
                   </div>
                   <IdeaGenerator />
                 </motion.section>

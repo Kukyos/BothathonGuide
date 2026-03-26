@@ -3,6 +3,8 @@ export const PHASE_3_CONTENT = `
 
 Right now, every time you restart your chatbot, it forgets **everything**. It's like talking to someone with amnesia. In this phase, we'll fix that by giving your bot **persistent memory**.
 
+> 🔑 **Before starting:** Make sure your virtual environment is activated! You should see \`(venv)\` in your terminal prompt. If not, run the activation command from Phase 1 Step 7.
+
 ---
 
 ## The Problem
@@ -112,6 +114,8 @@ while True:
 
     print(f"\\n🧠 Bot: {bot_reply}")
 \`\`\`
+
+[download:memory_bot.py]
 
 ### Test It
 
@@ -242,6 +246,8 @@ while True:
 
     print(f"\\n🧠 Bot: {bot_reply}")
 \`\`\`
+
+[download:smart_memory_bot.py]
 
 This bot does something clever:
 - It keeps the last 20 messages in full detail

@@ -168,9 +168,44 @@ A terminal panel should appear at the bottom of VS Code. It's already pointed at
 
 ---
 
-## Step 7: Install the Gemini SDK
+## Step 7: Create a Virtual Environment
 
-In your VS Code terminal (the one at the bottom), type:
+Before installing any packages, let's create a **virtual environment**. This keeps your project's packages separate from the rest of your system — it prevents version conflicts and permission issues.
+
+In your VS Code terminal, type:
+
+\`\`\`bash
+python -m venv venv
+\`\`\`
+
+Now **activate** the virtual environment:
+
+### 🪟 Windows (PowerShell)
+\`\`\`bash
+.\\venv\\Scripts\\Activate.ps1
+\`\`\`
+
+### 🪟 Windows (Command Prompt)
+\`\`\`bash
+venv\\Scripts\\activate.bat
+\`\`\`
+
+### 🍎 Mac / 🐧 Linux
+\`\`\`bash
+source venv/bin/activate
+\`\`\`
+
+You should see \`(venv)\` appear at the beginning of your terminal line. This means you're inside the virtual environment.
+
+> ⚠️ **Important:** You'll need to activate the virtual environment every time you open a new terminal. If you don't see \`(venv)\` in your terminal prompt, run the activation command above again.
+
+> **PowerShell error?** If you get a "running scripts is disabled" error on Windows, run this first: \`Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser\` and then try the activation command again.
+
+---
+
+## Step 8: Install the Gemini SDK
+
+In your VS Code terminal (make sure you see \`(venv)\` in the prompt), type:
 
 \`\`\`bash
 pip install google-genai
@@ -182,7 +217,7 @@ Wait for it to download and install. You should see \`Successfully installed...\
 
 ---
 
-## Step 8: Get Your Gemini API Key
+## Step 9: Get Your Gemini API Key
 
 An **API key** is like a password that lets your code talk to Google's AI. Let's get one:
 
@@ -198,7 +233,7 @@ An **API key** is like a password that lets your code talk to Google's AI. Let's
 
 ---
 
-## Step 9: Write Your Chatbot
+## Step 10: Write Your Chatbot
 
 Now for the fun part! Go back to your \`chatbot.py\` file in VS Code and paste this code:
 
@@ -221,11 +256,13 @@ response = client.models.generate_content(
 print(response.text)
 \`\`\`
 
-**Important:** Replace \`PASTE_YOUR_API_KEY_HERE\` with the API key you copied in Step 8. Keep the quotes around it!
+[download:chatbot.py]
+
+**Important:** Replace \`PASTE_YOUR_API_KEY_HERE\` with the API key you copied in Step 9. Keep the quotes around it!
 
 ---
 
-## Step 10: Run Your Chatbot
+## Step 11: Run Your Chatbot
 
 In your VS Code terminal, type:
 
@@ -243,7 +280,7 @@ After a moment, you should see Gemini's response in your terminal — a kid-frie
 
 ---
 
-## Step 11: Make It Interactive
+## Step 12: Make It Interactive
 
 A chatbot that only says one thing isn't very useful. Let's upgrade it to have a **real conversation** where you can type messages back and forth.
 
@@ -276,6 +313,8 @@ while True:
 
     print(f"\\n🤖 Bot: {response.text}")
 \`\`\`
+
+[download:chatbot_interactive.py]
 
 Run it again with \`python chatbot.py\` and try having a conversation! Type anything and the bot will respond. Type \`quit\` when you're done.
 
@@ -358,7 +397,25 @@ while True:
     print(f"\\n⚡ Bot: {response.choices[0].message.content}")
 \`\`\`
 
+[download:chatbot_groq.py]
+
 Run it with \`python chatbot_groq.py\` — notice how much faster the responses are!
+
+### Save Your Dependencies
+
+Now that you've installed packages, let's save them so anyone can recreate your setup:
+
+\`\`\`bash
+pip freeze > requirements.txt
+\`\`\`
+
+This creates a \`requirements.txt\` file listing all installed packages with their versions. When someone else (or future you) wants to set up this project, they just run:
+
+\`\`\`bash
+pip install -r requirements.txt
+\`\`\`
+
+> **Tip:** Run \`pip freeze > requirements.txt\` again whenever you install new packages to keep it updated.
 
 ### Gemini vs Groq — When to Use Which?
 
@@ -377,10 +434,12 @@ Run it with \`python chatbot_groq.py\` — notice how much faster the responses 
 
 You now have:
 - ✅ Python installed and working
+- ✅ A virtual environment for clean package management
 - ✅ VS Code set up as your editor 
 - ✅ A working AI chatbot in your terminal
 - ✅ Experience with both Gemini and Groq APIs
 - ✅ An interactive chat loop
+- ✅ A \`requirements.txt\` for reproducible setups
 
 **Next up in Phase 2:** We'll learn how to control your bot's personality, creativity, and behavior using modifiers like system prompts and temperature.
 `;

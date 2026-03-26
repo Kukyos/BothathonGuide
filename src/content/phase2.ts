@@ -3,6 +3,8 @@ export const PHASE_2_CONTENT = `
 
 Now that you have a working chatbot, it's time to learn how to **control** it. Right now your bot is like an actor with no script — it'll respond, but it has no personality, no focus, and no constraints. Let's fix that.
 
+> 🔑 **Before starting:** Make sure your virtual environment is activated! You should see \`(venv)\` in your terminal prompt. If not, run the activation command from Phase 1 Step 7.
+
 ---
 
 ## System Prompts — Give Your Bot a Personality
@@ -47,6 +49,8 @@ while True:
 
     print(f"\\n🏴‍☠️ Pirate: {response.choices[0].message.content}")
 \`\`\`
+
+[download:pirate_bot.py]
 
 Try it! Type "I need to go to the store to buy groceries" and watch it transform.
 
@@ -98,6 +102,8 @@ for temp in [0.0, 0.5, 1.0, 1.5]:
     print(f"   {response.choices[0].message.content[:200]}")
     print("-" * 50)
 \`\`\`
+
+[download:temperature_test.py]
 
 Run it and notice how the ideas get wilder as temperature increases!
 
@@ -165,6 +171,8 @@ while True:
     print(f"\\n🤖 Bot: {bot_reply}")
 \`\`\`
 
+[download:smart_chat.py]
+
 Now try this:
 1. Tell the bot "My name is Alex"
 2. Ask "What's my name?"
@@ -184,6 +192,8 @@ In your VS Code terminal:
 \`\`\`bash
 pip install streamlit
 \`\`\`
+
+> **Don't forget:** Run \`pip freeze > requirements.txt\` after installing to keep your dependencies file updated.
 
 ### Create Your Web Chatbot
 
@@ -236,6 +246,8 @@ if prompt := st.chat_input("Say something..."):
     
     st.session_state.messages.append({"role": "assistant", "content": bot_reply})
 \`\`\`
+
+[download:app.py]
 
 ### Run Your Web App
 
