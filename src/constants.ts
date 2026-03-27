@@ -30,6 +30,7 @@ export const NAV_ITEMS: NavItem[] = [
 
   // Phase 2
   { title: "Phase 2: Modifiers", id: "phase-2", level: 0, phase: 2 },
+  { title: ".env File Setup", id: "quick-setup-use-a-env-file-for-api-keys", level: 1, phase: 2 },
   { title: "System Prompts", id: "system-prompts--give-your-bot-a-personality", level: 1, phase: 2 },
   { title: "Temperature", id: "temperature--control-creativity", level: 1, phase: 2 },
   { title: "Multi-Turn Chat", id: "multi-turn-conversations", level: 1, phase: 2 },
@@ -43,5 +44,5 @@ export const NAV_ITEMS: NavItem[] = [
   { title: "Smart Memory", id: "step-3-smart-memory--summarizing-old-conversations", level: 1, phase: 3 },
 
   // Phase 4
-  { title: "Phase 4: Idea Generator", id: "phase-4", level: 0, phase: 4 },
+  { title: "Phase 4: Hackathon", id: "phase-4", level: 0, phase: 4 },
 ];

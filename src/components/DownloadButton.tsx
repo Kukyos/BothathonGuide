@@ -38,14 +38,14 @@ export const DownloadFileButton = ({ filename }: { filename: string }) => {
       className="flex items-center gap-2 px-3 py-1.5 mt-2 mb-6 text-sm font-medium rounded-lg 
                  bg-white/5 hover:bg-white/10 text-emerald-400 hover:text-emerald-300 
                  border border-emerald-500/20 hover:border-emerald-500/40 transition-all group"
-      title={`Download ${fileData.label}`}
+      title="Download file"
     >
       {downloaded ? (
         <Check className="w-4 h-4 text-emerald-400" weight="bold" />
       ) : (
         <FileArrowDown className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" weight="bold" />
       )}
-      {downloaded ? 'Downloaded!' : `Download ${fileData.label}`}
+      {downloaded ? 'Downloaded!' : 'Download file'}
     </button>
   );
 };
