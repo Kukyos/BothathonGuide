@@ -29,7 +29,7 @@ print(response.text)
 API_KEY = "PASTE_YOUR_API_KEY_HERE"
 client = genai.Client(api_key=API_KEY)
 
-print("🤖 Gemini Chatbot")
+print("Gemini Chatbot")
 print("Type 'quit' to exit")
 print("-" * 40)
 
@@ -39,7 +39,7 @@ while True:
 
     # Check if user wants to quit
     if user_input.lower() == "quit":
-        print("👋 Goodbye!")
+        print("Goodbye!")
         break
 
     # Send to Gemini and get response
@@ -48,7 +48,7 @@ while True:
         contents=user_input
     )
 
-    print(f"\\n🤖 Bot: {response.text}")
+    print(f"\nBot: {response.text}")
 `,
   },
   'chatbot_groq.py': {
@@ -58,7 +58,7 @@ while True:
 API_KEY = "PASTE_YOUR_GROQ_API_KEY_HERE"
 client = Groq(api_key=API_KEY)
 
-print("⚡ Groq Chatbot")
+print("Groq Chatbot")
 print("Type 'quit' to exit")
 print("-" * 40)
 
@@ -66,7 +66,7 @@ while True:
     user_input = input("\\nYou: ")
 
     if user_input.lower() == "quit":
-        print("👋 Goodbye!")
+        print("Goodbye!")
         break
 
     response = client.chat.completions.create(
@@ -76,7 +76,7 @@ while True:
         ]
     )
 
-    print(f"\\n⚡ Bot: {response.choices[0].message.content}")
+    print(f"\\nBot: {response.choices[0].message.content}")
 `,
   },
   'pirate_bot.py': {
@@ -91,7 +91,7 @@ but written entirely in pirate speak.
 Use 'arr', 'matey', 'ye', 'plunder', etc. 
 Stay in character no matter what."""
 
-print("🏴\u200d☠️ Pirate Translator Bot")
+print("Pirate Translator Bot")
 print("Type 'quit' to exit")
 print("-" * 40)
 
@@ -99,7 +99,7 @@ while True:
     user_input = input("\\nYou: ")
 
     if user_input.lower() == "quit":
-        print("Arr, farewell matey! 🏴\u200d☠️")
+        print("Arr, farewell matey!")
         break
 
     response = client.chat.completions.create(
@@ -110,7 +110,7 @@ while True:
         ]
     )
 
-    print(f"\\n🏴\u200d☠️ Pirate: {response.choices[0].message.content}")
+    print(f"\\nPirate: {response.choices[0].message.content}")
 `,
   },
   'temperature_test.py': {
@@ -130,7 +130,7 @@ for temp in [0.0, 0.5, 1.0, 1.5]:
         max_tokens=100
     )
 
-    print(f"\\n🌡️ Temperature {temp}:")
+    print(f"\nTemperature {temp}:")
     print(f"   {response.choices[0].message.content[:200]}")
     print("-" * 50)
 `,
@@ -148,7 +148,7 @@ messages = [
     {"role": "system", "content": SYSTEM_PROMPT}
 ]
 
-print("💬 Smart Chatbot (with context!)")
+print("Smart Chatbot (with context!)")
 print("Type 'quit' to exit")
 print("-" * 40)
 
@@ -156,7 +156,7 @@ while True:
     user_input = input("\\nYou: ")
 
     if user_input.lower() == "quit":
-        print("👋 Goodbye!")
+        print("Goodbye!")
         break
 
     # Add user message to history
@@ -174,7 +174,7 @@ while True:
     # Add bot response to history
     messages.append({"role": "assistant", "content": bot_reply})
 
-    print(f"\\n🤖 Bot: {bot_reply}")
+    print(f"\nBot: {bot_reply}")
 `,
   },
   'app.py': {
@@ -183,8 +183,8 @@ while True:
 from groq import Groq
 
 # Page config
-st.set_page_config(page_title="My AI Chatbot", page_icon="🤖")
-st.title("🤖 My AI Chatbot")
+st.set_page_config(page_title="My AI Chatbot")
+st.title("My AI Chatbot")
 
 # Initialize Groq client
 client = Groq(api_key="YOUR_GROQ_API_KEY")
@@ -256,9 +256,9 @@ messages = load_memory()
 if not messages or messages[0].get("role") != "system":
     messages.insert(0, {"role": "system", "content": SYSTEM_PROMPT})
 
-print("🧠 Memory Bot")
+print("Memory Bot")
 print("Type 'quit' to exit | Type 'forget' to clear memory")
-print(f"📁 Loaded {len(messages) - 1} previous messages")
+print(f"Loaded {len(messages) - 1} previous messages")
 print("-" * 40)
 
 while True:
@@ -266,13 +266,13 @@ while True:
 
     if user_input.lower() == "quit":
         save_memory(messages)
-        print("💾 Memory saved! Goodbye! 👋")
+        print("Memory saved! Goodbye!")
         break
 
     if user_input.lower() == "forget":
         messages = [{"role": "system", "content": SYSTEM_PROMPT}]
         save_memory(messages)
-        print("🗑️ Memory cleared!")
+        print("Memory cleared!")
         continue
 
     messages.append({"role": "user", "content": user_input})
@@ -289,7 +289,7 @@ while True:
     # Save after every exchange
     save_memory(messages)
 
-    print(f"\\n🧠 Bot: {bot_reply}")
+    print(f"\nBot: {bot_reply}")
 `,
   },
   'smart_memory_bot.py': {
@@ -341,11 +341,11 @@ Keep it under 300 words."""
 # Load memory
 memory = load_memory()
 
-print("🧠 Smart Memory Bot")
+print("Smart Memory Bot")
 print("Type 'quit' to exit | Type 'forget' to clear memory")
 if memory["summary"]:
-    print("📋 Loaded previous memory summary")
-print(f"💬 {len(memory['messages'])} recent messages loaded")
+    print("Loaded previous memory summary")
+print(f"{len(memory['messages'])} recent messages loaded")
 print("-" * 40)
 
 while True:
@@ -353,13 +353,13 @@ while True:
 
     if user_input.lower() == "quit":
         save_memory(memory)
-        print("💾 Memory saved! Goodbye! 👋")
+        print("Memory saved! Goodbye!")
         break
 
     if user_input.lower() == "forget":
         memory = {"summary": "", "messages": []}
         save_memory(memory)
-        print("🗑️ All memory cleared!")
+        print("All memory cleared!")
         continue
 
     memory["messages"].append({"role": "user", "content": user_input})
@@ -393,11 +393,11 @@ while True:
             old_messages, memory["summary"]
         )
         memory["messages"] = memory["messages"][MAX_MESSAGES // 2:]
-        print("   📝 (Old messages summarized to save space)")
+        print("   (Old messages summarized to save space)")
 
     save_memory(memory)
 
-    print(f"\\n🧠 Bot: {bot_reply}")
+    print(f"\nBot: {bot_reply}")
 `,
   },
 };

@@ -3,7 +3,37 @@ export const PHASE_2_CONTENT = `
 
 Now that you have a working chatbot, it's time to learn how to **control** it. Right now your bot is like an actor with no script — it'll respond, but it has no personality, no focus, and no constraints. Let's fix that.
 
-> 🔑 **Before starting:** Make sure your virtual environment is activated! You should see \`(venv)\` in your terminal prompt. If not, run the activation command from Phase 1 Step 7.
+> **Before starting:** Make sure your virtual environment is activated! You should see \`(venv)\` in your terminal prompt. If not, run the activation command from Phase 1 Step 7.
+
+## Quick Setup: Use a .env File for API Keys
+
+Before you continue, move your key out of hardcoded Python strings and into a \`.env\` file.
+
+Create a file named **\`.env\`** in your project root:
+
+\`\`\`env
+GROQ_API_KEY=PASTE_YOUR_GROQ_API_KEY_HERE
+GEMINI_API_KEY=PASTE_YOUR_GEMINI_API_KEY_HERE
+\`\`\`
+
+Install dotenv support:
+
+\`\`\`bash
+pip install python-dotenv
+\`\`\`
+
+Then, in Python scripts where you create a client, load the environment variable:
+
+\`\`\`python
+import os
+from dotenv import load_dotenv
+from groq import Groq
+
+load_dotenv()
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+\`\`\`
+
+This keeps your API keys out of source code and makes your project easier to share safely.
 
 ---
 
@@ -28,7 +58,7 @@ but written entirely in pirate speak.
 Use 'arr', 'matey', 'ye', 'plunder', etc. 
 Stay in character no matter what."""
 
-print("🏴‍☠️ Pirate Translator Bot")
+print(" Pirate Translator Bot")
 print("Type 'quit' to exit")
 print("-" * 40)
 
@@ -36,7 +66,7 @@ while True:
     user_input = input("\\nYou: ")
 
     if user_input.lower() == "quit":
-        print("Arr, farewell matey! 🏴‍☠️")
+        print("Arr, farewell matey! ")
         break
 
     response = client.chat.completions.create(
@@ -47,10 +77,10 @@ while True:
         ]
     )
 
-    print(f"\\n🏴‍☠️ Pirate: {response.choices[0].message.content}")
+    print(f"\\n Pirate: {response.choices[0].message.content}")
 \`\`\`
 
-[download:pirate_bot.py]
+
 
 Try it! Type "I need to go to the store to buy groceries" and watch it transform.
 
@@ -98,12 +128,12 @@ for temp in [0.0, 0.5, 1.0, 1.5]:
         max_tokens=100
     )
 
-    print(f"\\n🌡️ Temperature {temp}:")
+    print(f"\\nTemperature {temp}:")
     print(f"   {response.choices[0].message.content[:200]}")
     print("-" * 50)
 \`\`\`
 
-[download:temperature_test.py]
+
 
 Run it and notice how the ideas get wilder as temperature increases!
 
@@ -142,7 +172,7 @@ messages = [
     {"role": "system", "content": SYSTEM_PROMPT}
 ]
 
-print("💬 Smart Chatbot (with context!)")
+print("Smart Chatbot (with context!)")
 print("Type 'quit' to exit")
 print("-" * 40)
 
@@ -150,7 +180,7 @@ while True:
     user_input = input("\\nYou: ")
 
     if user_input.lower() == "quit":
-        print("👋 Goodbye!")
+        print(" Goodbye!")
         break
 
     # Add user message to history
@@ -168,10 +198,10 @@ while True:
     # Add bot response to history
     messages.append({"role": "assistant", "content": bot_reply})
 
-    print(f"\\n🤖 Bot: {bot_reply}")
+    print(f"\\nBot: {bot_reply}")
 \`\`\`
 
-[download:smart_chat.py]
+
 
 Now try this:
 1. Tell the bot "My name is Alex"
@@ -204,8 +234,8 @@ import streamlit as st
 from groq import Groq
 
 # Page config
-st.set_page_config(page_title="My AI Chatbot", page_icon="🤖")
-st.title("🤖 My AI Chatbot")
+st.set_page_config(page_title="My AI Chatbot")
+st.title("My AI Chatbot")
 
 # Initialize Groq client
 client = Groq(api_key="YOUR_GROQ_API_KEY")
@@ -247,7 +277,7 @@ if prompt := st.chat_input("Say something..."):
     st.session_state.messages.append({"role": "assistant", "content": bot_reply})
 \`\`\`
 
-[download:app.py]
+
 
 ### Run Your Web App
 
@@ -255,7 +285,7 @@ if prompt := st.chat_input("Say something..."):
 streamlit run app.py
 \`\`\`
 
-Your browser should open automatically with a beautiful chat interface! 🎉
+Your browser should open automatically with a beautiful chat interface!
 
 <!-- IMAGE: Streamlit chatbot UI -->
 
@@ -263,13 +293,13 @@ Your browser should open automatically with a beautiful chat interface! 🎉
 
 ---
 
-## Phase 2 Complete! 🎉
+## Phase 2 Complete!
 
 You now know how to:
-- ✅ Use system prompts to control AI behavior
-- ✅ Adjust temperature and other parameters
-- ✅ Maintain multi-turn conversations
-- ✅ Build web apps with Streamlit
+- Use system prompts to control AI behavior
+- Adjust temperature and other parameters
+- Maintain multi-turn conversations
+- Build web apps with Streamlit
 
 **Next up in Phase 3:** We'll make your bot **remember** things even after it's restarted.
 `;

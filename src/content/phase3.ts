@@ -3,7 +3,7 @@ export const PHASE_3_CONTENT = `
 
 Right now, every time you restart your chatbot, it forgets **everything**. It's like talking to someone with amnesia. In this phase, we'll fix that by giving your bot **persistent memory**.
 
-> 🔑 **Before starting:** Make sure your virtual environment is activated! You should see \`(venv)\` in your terminal prompt. If not, run the activation command from Phase 1 Step 7.
+> **Before starting:** Make sure your virtual environment is activated! You should see \`(venv)\` in your terminal prompt. If not, run the activation command from Phase 1 Step 7.
 
 ---
 
@@ -79,9 +79,9 @@ messages = load_memory()
 if not messages or messages[0].get("role") != "system":
     messages.insert(0, {"role": "system", "content": SYSTEM_PROMPT})
 
-print("🧠 Memory Bot")
+print("Memory Bot")
 print("Type 'quit' to exit | Type 'forget' to clear memory")
-print(f"📁 Loaded {len(messages) - 1} previous messages")
+print(f"Loaded {len(messages) - 1} previous messages")
 print("-" * 40)
 
 while True:
@@ -89,13 +89,13 @@ while True:
 
     if user_input.lower() == "quit":
         save_memory(messages)
-        print("💾 Memory saved! Goodbye! 👋")
+        print("Memory saved! Goodbye! ")
         break
 
     if user_input.lower() == "forget":
         messages = [{"role": "system", "content": SYSTEM_PROMPT}]
         save_memory(messages)
-        print("🗑️ Memory cleared!")
+        print("Memory cleared!")
         continue
 
     messages.append({"role": "user", "content": user_input})
@@ -112,10 +112,10 @@ while True:
     # Save after every exchange
     save_memory(messages)
 
-    print(f"\\n🧠 Bot: {bot_reply}")
+    print(f"\\nBot: {bot_reply}")
 \`\`\`
 
-[download:memory_bot.py]
+
 
 ### Test It
 
@@ -125,7 +125,7 @@ while True:
 4. Run the bot again: \`python memory_bot.py\`
 5. Ask: "What's my name and what food do I like?"
 
-**It remembers!** 🎉 Check your folder — you'll see a \`memory.json\` file with the entire conversation saved.
+**It remembers!** Check your folder — you'll see a \`memory.json\` file with the entire conversation saved.
 
 ---
 
@@ -188,11 +188,11 @@ Keep it under 300 words."""
 # Load memory
 memory = load_memory()
 
-print("🧠 Smart Memory Bot")
+print("Smart Memory Bot")
 print("Type 'quit' to exit | Type 'forget' to clear memory")
 if memory["summary"]:
-    print("📋 Loaded previous memory summary")
-print(f"💬 {len(memory['messages'])} recent messages loaded")
+    print("Loaded previous memory summary")
+print(f"{len(memory['messages'])} recent messages loaded")
 print("-" * 40)
 
 while True:
@@ -200,13 +200,13 @@ while True:
 
     if user_input.lower() == "quit":
         save_memory(memory)
-        print("💾 Memory saved! Goodbye! 👋")
+        print("Memory saved! Goodbye! ")
         break
 
     if user_input.lower() == "forget":
         memory = {"summary": "", "messages": []}
         save_memory(memory)
-        print("🗑️ All memory cleared!")
+        print("All memory cleared!")
         continue
 
     memory["messages"].append({"role": "user", "content": user_input})
@@ -240,14 +240,14 @@ while True:
             old_messages, memory["summary"]
         )
         memory["messages"] = memory["messages"][MAX_MESSAGES // 2:]
-        print("   📝 (Old messages summarized to save space)")
+        print("   (Old messages summarized to save space)")
 
     save_memory(memory)
 
-    print(f"\\n🧠 Bot: {bot_reply}")
+    print(f"\\nBot: {bot_reply}")
 \`\`\`
 
-[download:smart_memory_bot.py]
+
 
 This bot does something clever:
 - It keeps the last 20 messages in full detail
@@ -257,13 +257,13 @@ This bot does something clever:
 
 ---
 
-## Phase 3 Complete! 🎉
+## Phase 3 Complete!
 
 You now know how to:
-- ✅ Persist conversations to a file
-- ✅ Load memory on startup
-- ✅ Summarize old conversations to save tokens
-- ✅ Build a bot that truly remembers
+- Persist conversations to a file
+- Load memory on startup
+- Summarize old conversations to save tokens
+- Build a bot that truly remembers
 
-**Next up in Phase 4:** It's hackathon time! Head over to the Idea Generator to brainstorm your project. 🎲
+**Next up in Phase 4:** It's hackathon time. Head over to the Hackathon section to brainstorm your project.
 `;

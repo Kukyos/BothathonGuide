@@ -57,7 +57,7 @@ The idea MUST:
 - Be practical and impressive
 - Include a catchy name
 
-Format: Start with an emoji and the project name in bold, then a 2-3 sentence description of what the chatbot does and why it's cool. Keep it under 80 words total.`,
+Format: Start with the project name in bold, then a 2-3 sentence description of what the chatbot does and why it's cool. Keep it under 80 words total.`,
     },
     {
       role: 'user',

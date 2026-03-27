@@ -19,7 +19,7 @@ Think of it like **texting your computer**. Instead of clicking buttons and icon
 
 Here's how to open a terminal on your operating system:
 
-### 🪟 Windows
+### Windows
 1. Press \`Win + X\` to open the Power User Menu
 2. Click on **"Terminal (Admin)"** or **"Windows PowerShell (Admin)"**
 3. Click **"Yes"** on the User Account Control prompt
@@ -31,12 +31,12 @@ Here's how to open a terminal on your operating system:
 
 <!-- IMAGE: Windows Terminal opening -->
 
-### 🍎 Mac
+### Mac
 1. Press \`Cmd + Space\` to open **Spotlight Search**
 2. Type **"Terminal"**
 3. Press **Enter**
 
-### 🐧 Linux
+### Linux
 1. Press \`Ctrl + Alt + T\` — that's it!
 
 > You should now have a window with a blinking cursor waiting for your input. This is your terminal. Leave it open — we'll come back to it.
@@ -55,9 +55,9 @@ python --version
 
 **What you might see:**
 
-✅ **If you see something like** \`Python 3.11.5\` **or any** \`Python 3.x.x\` — **great! Skip to Step 3.**
+If you see something like \`Python 3.11.5\` or any \`Python 3.x.x\`, great. Skip to Step 3.
 
-❌ **If you see** \`'python' is not recognized\` **or** \`command not found\` — no worries! Try this instead:
+If you see \`'python' is not recognized\` or \`command not found\`, try this instead:
 
 \`\`\`bash
 python3 --version
@@ -81,7 +81,7 @@ Still nothing? That means Python isn't installed yet. Continue to Step 2.
 
 When the installer opens, you'll see a checkbox at the bottom that says:
 
-**☐ Add Python to PATH**
+Add Python to PATH
 
 **YOU MUST CHECK THIS BOX.** This is the single most common mistake beginners make. If you miss this, Python won't work from your terminal.
 
@@ -95,7 +95,7 @@ When the installer opens, you'll see a checkbox at the bottom that says:
 python --version
 \`\`\`
 
-You should now see \`Python 3.x.x\`. If you do — you're ready! 🎉
+You should now see \`Python 3.x.x\`. If you do, you're ready.
 
 Also verify pip (Python's package installer) is working:
 
@@ -180,17 +180,17 @@ python -m venv venv
 
 Now **activate** the virtual environment:
 
-### 🪟 Windows (PowerShell)
+### Windows (PowerShell)
 \`\`\`bash
 .\\venv\\Scripts\\Activate.ps1
 \`\`\`
 
-### 🪟 Windows (Command Prompt)
+### Windows (Command Prompt)
 \`\`\`bash
 venv\\Scripts\\activate.bat
 \`\`\`
 
-### 🍎 Mac / 🐧 Linux
+### Mac / Linux
 \`\`\`bash
 source venv/bin/activate
 \`\`\`
@@ -256,8 +256,6 @@ response = client.models.generate_content(
 print(response.text)
 \`\`\`
 
-[download:chatbot.py]
-
 **Important:** Replace \`PASTE_YOUR_API_KEY_HERE\` with the API key you copied in Step 9. Keep the quotes around it!
 
 ---
@@ -270,7 +268,7 @@ In your VS Code terminal, type:
 python chatbot.py
 \`\`\`
 
-After a moment, you should see Gemini's response in your terminal — a kid-friendly explanation of quantum physics! 🎉
+After a moment, you should see Gemini's response in your terminal: a kid-friendly explanation of quantum physics.
 
 > **See an error about \`python\`?** Try \`python3 chatbot.py\` instead.
 
@@ -292,7 +290,7 @@ from google import genai
 API_KEY = "PASTE_YOUR_API_KEY_HERE"
 client = genai.Client(api_key=API_KEY)
 
-print("🤖 Gemini Chatbot")
+print("Gemini Chatbot")
 print("Type 'quit' to exit")
 print("-" * 40)
 
@@ -302,7 +300,7 @@ while True:
 
     # Check if user wants to quit
     if user_input.lower() == "quit":
-        print("👋 Goodbye!")
+        print("Goodbye!")
         break
 
     # Send to Gemini and get response
@@ -311,16 +309,14 @@ while True:
         contents=user_input
     )
 
-    print(f"\\n🤖 Bot: {response.text}")
+    print(f"\\nBot: {response.text}")
 \`\`\`
-
-[download:chatbot_interactive.py]
 
 Run it again with \`python chatbot.py\` and try having a conversation! Type anything and the bot will respond. Type \`quit\` when you're done.
 
 ---
 
-## The Rate Limit Problem 🚨
+## The Rate Limit Problem
 
 You might have noticed something while testing: sometimes the bot **takes a long time to respond**, or you get an **error** that looks like this:
 
@@ -347,9 +343,9 @@ This is totally normal, but it's annoying during a hackathon where every minute 
 
 **Groq** is another AI API provider, but with some big advantages for hackathons:
 
-- ⚡ **Extremely fast responses** (often under 1 second)
-- 🆓 **Generous free tier** — much higher rate limits than Gemini
-- 🧠 Supports powerful open-source models (like LLaMA)
+- Extremely fast responses (often under 1 second)
+- Generous free tier options, depending on account limits
+- Supports powerful open-source models (like LLaMA)
 
 ### Get Your Groq API Key
 
@@ -376,7 +372,7 @@ from groq import Groq
 API_KEY = "PASTE_YOUR_GROQ_API_KEY_HERE"
 client = Groq(api_key=API_KEY)
 
-print("⚡ Groq Chatbot")
+print("Groq Chatbot")
 print("Type 'quit' to exit")
 print("-" * 40)
 
@@ -384,7 +380,7 @@ while True:
     user_input = input("\\nYou: ")
 
     if user_input.lower() == "quit":
-        print("👋 Goodbye!")
+        print("Goodbye!")
         break
 
     response = client.chat.completions.create(
@@ -394,10 +390,8 @@ while True:
         ]
     )
 
-    print(f"\\n⚡ Bot: {response.choices[0].message.content}")
+    print(f"\\nBot: {response.choices[0].message.content}")
 \`\`\`
-
-[download:chatbot_groq.py]
 
 Run it with \`python chatbot_groq.py\` — notice how much faster the responses are!
 
@@ -419,27 +413,31 @@ pip install -r requirements.txt
 
 ### Gemini vs Groq — When to Use Which?
 
-| Feature | Gemini (Free) | Groq (Free) |
+| Feature | Gemini API (Free Tier) | Groq API (Free Tier) |
 |---|---|---|
-| Speed | Moderate | ⚡ Very Fast |
-| Rate Limits | ~15/min | ~30/min |
-| Models | Gemini 2.0 Flash | LLaMA 3.3 70B |
-| Best For | Google ecosystem, multimodal | Fast prototyping, hackathons |
+| Speed | Fast, model-dependent | Extremely fast (often \<1 second) |
+| RPM (Requests/min) | 10 RPM (Flash) / 5 RPM (Pro) | 30 RPM (LLaMA 3.3 70B) |
+| TPM (Tokens/min) | 250,000 | 40,000 |
+| RPD (Requests/day) | 250 (Flash) / 100 (Pro) | 14,400 |
+| Models | Gemini family (text + multimodal) | Open models (LLaMA, Qwen, DeepSeek) |
+| Best For | Multimodal workflows, Google ecosystem | Fast prototyping, low-latency chat apps |
 
-> **Our recommendation for the hackathon:** Use **Groq** for rapid development and testing, and **Gemini** when you need Google-specific features.
+> Values above are based on vendor docs as of March 2026. Limits vary by model and plan — check the official docs for the latest.
+
+> Our recommendation for the hackathon: use **Groq** for rapid iteration and **Gemini** when you need multimodal features.
 
 ---
 
-## Phase 1 Complete! 🎉
+## Phase 1 Complete!
 
 You now have:
-- ✅ Python installed and working
-- ✅ A virtual environment for clean package management
-- ✅ VS Code set up as your editor 
-- ✅ A working AI chatbot in your terminal
-- ✅ Experience with both Gemini and Groq APIs
-- ✅ An interactive chat loop
-- ✅ A \`requirements.txt\` for reproducible setups
+- Python installed and working
+- A virtual environment for clean package management
+- VS Code set up as your editor 
+- A working AI chatbot in your terminal
+- Experience with both Gemini and Groq APIs
+- An interactive chat loop
+- A \`requirements.txt\` for reproducible setups
 
 **Next up in Phase 2:** We'll learn how to control your bot's personality, creativity, and behavior using modifiers like system prompts and temperature.
 `;

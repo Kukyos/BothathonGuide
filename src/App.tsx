@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { 
   TerminalWindow, 
@@ -11,8 +11,6 @@ import {
   Check,
   Lightning,
   Brain,
-  DiceThree,
-  CodeBlock as CodeBlockIcon,
   Robot,
   RocketLaunch
 } from '@phosphor-icons/react';
@@ -25,16 +23,14 @@ import { NAV_ITEMS } from './constants';
 import { PHASE_1_CONTENT } from './content/phase1';
 import { PHASE_2_CONTENT } from './content/phase2';
 import { PHASE_3_CONTENT } from './content/phase3';
-import IdeaGenerator from './components/IdeaGenerator';
-import GradualBlur from './GradualBlur';
-import { DownloadProjectButton, DownloadFileButton } from './components/DownloadButton';
+import { DownloadProjectButton } from './components/DownloadButton';
 import TextType from './TextType';
 
 const PHASE_LABELS: Record<number, { title: string; icon: React.ReactNode }> = {
   1: { title: 'Phase 1: Terminal Bot', icon: <TerminalWindow weight="bold" /> },
   2: { title: 'Phase 2: Modifiers', icon: <Lightning weight="bold" /> },
   3: { title: 'Phase 3: Memory', icon: <Brain weight="bold" /> },
-  4: { title: 'Phase 4: Idea Generator', icon: <DiceThree weight="bold" /> },
+  4: { title: 'Phase 4: Hackathon', icon: <RocketLaunch weight="bold" /> },
 };
 
 // Custom Code Block with Copy Button
@@ -91,6 +87,12 @@ export default function App() {
     damping: 30,
     restDelta: 0.001
   });
+
+  // Enable smooth scrolling globally
+  useLayoutEffect(() => {
+    document.documentElement.style.scrollBehavior = 'smooth';
+    return () => { document.documentElement.style.scrollBehavior = ''; };
+  }, []);
 
   // Scroll spy relative to the current view
   useEffect(() => {
@@ -167,16 +169,12 @@ export default function App() {
     },
     p: ({ children }: any) => {
       const hasBlockElement = React.Children.toArray(children).some(
-        (child: any) => child?.type === 'video' || child?.type === 'img' || child?.type === 'div' || child?.type === DownloadFileButton
+        (child: any) => child?.type === 'video' || child?.type === 'img' || child?.type === 'div'
       );
       if (hasBlockElement) return <div className="my-8">{children}</div>;
       return <p>{children}</p>;
     },
     a: ({ href, children, ...props }: any) => {
-      if (href?.startsWith('download:')) {
-        const filename = href.replace('download:', '');
-        return <DownloadFileButton filename={filename} />;
-      }
       return <a href={href} target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-4 decoration-emerald-500/30 hover:decoration-emerald-400 transition-colors inline-flex items-center gap-1" {...props}>{children}</a>;
     },
     pre: ({ children }: any) => {
@@ -269,12 +267,8 @@ export default function App() {
       {/* Enhanced Visual Effects */}
       <div className="noise-overlay" />
       <div className="fixed inset-0 bg-grid pointer-events-none opacity-[0.15]" />
-      
-      <div className="fixed inset-0 pointer-events-none overflow-hidden mix-blend-screen">
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-500/10 blur-[150px] rounded-full animate-float" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-purple-500/10 blur-[150px] rounded-full animate-float" style={{ animationDelay: '-3s' }} />
-        <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] bg-emerald-500/5 blur-[120px] rounded-full animate-pulse" style={{ animationDuration: '8s' }} />
-      </div>
+
+
 
       <motion.div 
         className="fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 via-blue-500 to-purple-500 z-[100] origin-left" 
@@ -307,7 +301,7 @@ export default function App() {
         {/* Sidebar */}
         <aside className={cn(
           "docs-sidebar",
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}>
           <div className="sidebar-inner">
             <nav className="sidebar-nav">
@@ -324,7 +318,6 @@ export default function App() {
                   {item.title}
                 </button>
               ))}
-
               {/* Phase Groups */}
               {phases.map((phase) => {
                 const phaseNum = phase as 1|2|3|4;
@@ -395,19 +388,13 @@ export default function App() {
               })}
             </nav>
 
-            <div className="sidebar-status">
-              <div className="text-[9px] font-bold text-white/30 uppercase mb-1.5">Hackathon</div>
-              <div className="flex items-center gap-2 text-xs font-medium">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse box-shadow-glow" />
-                Live & Active
-              </div>
-            </div>
+
           </div>
         </aside>
 
         {isSidebarOpen && (
           <div 
-            className="fixed inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-sm transition-all"
+            className="fixed inset-0 bg-black/60 z-30 md:hidden backdrop-blur-sm transition-all"
             onClick={() => setIsSidebarOpen(false)}
           />
         )}
@@ -429,7 +416,7 @@ export default function App() {
                 >
                   <div className="hero-badge">
                     <Sparkle className="w-3 h-3 text-white" weight="fill" />
-                    Official Resource Hub
+                    Minds and Machines Club, CIRA
                   </div>
                   <h1 className="hero-title">
                     <TextType 
@@ -499,15 +486,13 @@ export default function App() {
                      <p>You've completed the workshop! You now have the skills to build a functioning, intelligent chatbot with memory and custom personas. It's time to build your hackathon project.</p>
                   </div>
                      
-                  <div className="mb-12 bg-white/[0.02] border border-white/10 rounded-xl p-8 text-center">
+                  <div className="mb-12 bg-white/[0.02] border border-white/10 rounded-xl p-8 flex flex-col items-center text-center">
                     <h3 className="text-xl font-display font-medium text-white mb-3">Download Your Complete Setup</h3>
                     <p className="text-white/60 text-sm mb-6 max-w-2xl mx-auto">
                       Get the entire project ready to go! Includes 1-click installer and runners so you can focus on modifying the bots for your hackathon idea.
                     </p>
                     <DownloadProjectButton />
                   </div>
-                  
-                  <IdeaGenerator />
                 </motion.section>
               )}
             </AnimatePresence>
@@ -519,21 +504,8 @@ export default function App() {
               <TerminalWindow className="w-4 h-4 text-white/40" weight="bold" />
               <span className="font-black tracking-tighter text-sm font-display text-white/40">BOT-A-THON</span>
             </div>
-            <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.2em]">© 2026 Official Hackathon Hub</p>
+            <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.2em]">Minds and Machines Club, CIRA</p>
           </footer>
-          
-          <div className="fixed bottom-0 right-0 left-0 lg:left-[280px] z-20 pointer-events-none">
-            <GradualBlur
-              target="parent"
-              position="bottom"
-              height="4rem"
-              strength={2}
-              divCount={15}
-              curve="bezier"
-              exponential
-              opacity={1}
-            />
-          </div>
         </main>
       </div>
     </div>
